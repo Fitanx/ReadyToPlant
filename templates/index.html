@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ReadyToPlant : Moisture Prediction App</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>ReadyToPlant</h1>
+        <h2>Necessary Data Prediction Web Application For Planting.</h2>
+        <form action="/upload" method="POST" enctype="multipart/form-data">
+            <input type="file" name="file" accept=".xlsx" required>
+            <button type="submit">Upload Excel File</button>
+        </form>
+        {% if predicted_data %}
+        <div class="prediction-result">
+            <h2>Prediction Results:</h2>
+            <table>
+                <tr>
+                    <th>Area Name</th>
+                    <th>Humidity</th>
+                    <th>Temperature</th>
+                    <th>Weather</th>
+                    <th>Suitable Crops</th>
+                    <th>Prediction Data</th>
+                </tr>
+                {% for row in predicted_data %}
+                <tr>
+                    <td>{{ row[0] }}</td>
+                    <td>{{ row[1] }}</td>
+                    <td>{{ row[2] }}</td>
+                    <td>{{ row[3] }}</td>
+                    <td>{{ row[4] }}</td>
+                    <td>{{ row[5] }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+            <a href="{{ url_for('download', filename='predicted_data.xlsx') }}" class="download-link">Download Predicted Data</a>
+        </div>
+        {% endif %}
+        <h3>This is only a piece of our prototype version.</h3>
+    </div>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
